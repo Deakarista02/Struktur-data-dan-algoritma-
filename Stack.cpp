@@ -1,61 +1,46 @@
 #include<iostream>
 using namespace std;
 
-const int MAX_QUEUE_SIZE = 5;
-string data[MAX_QUEUE_SIZE];
-int front = -1, rear = -1;
+const int MAX_STACK_SIZE = 5;
+string data[MAX_STACK_SIZE];
+int top = 0;
 
 bool isEmpty(){
-    return front == -1 && rear == -1;
+    return top == 0;
 }
 
 bool isFull(){
-    return rear == MAX_QUEUE_SIZE-1;
+    return top == MAX_STACK_SIZE;
 }
 
 void display(){
     if(!isEmpty()){
         cout << "Data Tersimpan : " << endl;
-        for(int a = front; a <= rear; a++){
+        for(int a = 0; a < top; a++){
             cout << a+1 << "."<< data[a] << endl;
         }
     }else{
         cout << "Data Tidak Tersedia" << endl;
     }
     if(isFull()){
-        cout << "Queue Penuh" << endl;
+        cout << "Stack Penuh" << endl;
     }
     cout << endl;
 }
 
-void enqueue(){
-    if(isFull()){
-        cout << "Queue Penuh, tidak bisa menambahkan data baru." << endl;
-    }else{
-        string item;
+void push(){
+    if(!isFull()){
         cout << "Masukkan Data : ";
-        cin >> item;
-        if(isEmpty()){
-            front = 0;
-            rear = 0;
-        }else{
-            rear++;
-        }
-        data[rear] = item;
+        cin >> data[top];
+        top++;
+    }else{
+        cout << "Stack Penuh, tidak bisa menambahkan data baru." << endl;
     }
 }
 
-void dequeue(){
-    if(isEmpty()){
-        cout << "Queue Kosong, tidak bisa menghapus data." << endl;
-    }else{
-        cout << "Menghapus Data : " << data[front] << endl;
-        if(front == rear){
-            front = -1;
-            rear = -1;
-        }else{
-            front++;
-        }
+void pop(){
+    if(!isEmpty()){
+        top--;
     }
 }
 
@@ -65,15 +50,15 @@ int main(){
     while(true){
         system("cls");
         display();
-        cout  << "Menu Utama\n1. Enqueue\n2. Dequeue\n3. Keluar\nPilih : ";
+        cout  << "Menu Utama\n1. Push\n2. Pop\n3. Keluar\nPilih : ";
         cin >> pil;
 
         switch(pil){
             case 1:
-                enqueue();
+                push();
                 break;
             case 2:
-                dequeue();
+                pop();
                 break;
             case 3:
                 cout << "Program Selesai" << endl;
